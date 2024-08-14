@@ -86,7 +86,7 @@ jobs:
     permissions: write-all
 
     needs: target-check
-    if: ${{ needs.target-check.outputs.bench == 'true' }}
+    if: ${{ needs.target-check.outputs.bench == 'false' }}
 
     steps:
 
