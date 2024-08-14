@@ -17,20 +17,19 @@ env:
 
 jobs:
   target-check:
-    name: ci-target-check
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
 
     outputs:
-      build: ${{ steps.ci-target-check.outptus.build }}
-      bench: ${{ steps.ci-target-check.outptus.bench }}
-      sharding-test: ${{ steps.ci-target-check.outptus.sharding-test }}
+      build: ${{ steps.target-check.outputs.build }}
+      bench: ${{ steps.target-check.outputs.bench }}
+      sharding-test: ${{ steps.target-check.outputs.sharding-test }}
 
     steps:
       - name: CI target check by path
         uses: dorny/paths-filter@v3
-        id: ci-target-check
+        id: target-check
         with:
           filters: |
             build: '**'
