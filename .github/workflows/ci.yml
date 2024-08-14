@@ -20,6 +20,7 @@ jobs:
     name: path-check
     runs-on: ubuntu-latest
     outputs:
+      output-test: ${{ steps.build-target-check.outputs.output-test }}
       build: ${{ steps.outputs.outputs.build }}
       bench: ${{ steps.outputs.outputs.bench }}
       sharding-test: ${{ steps.outputs.sharding-test }}
