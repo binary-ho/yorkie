@@ -37,6 +37,8 @@ import (
 	"github.com/yorkie-team/yorkie/server/logging"
 )
 
+// Comment for ci test
+
 // PushPullKey creates a new sync.Key of PushPull for the given document.
 func PushPullKey(projectID types.ID, docKey key.Key) sync.Key {
 	return sync.NewKey(fmt.Sprintf("pushpull-%s-%s", projectID, docKey))
