@@ -17,10 +17,10 @@ env:
 
 jobs:
   build:
-    uses: ./ci/build-job.yml
+    uses: ./.github/workflows/ci/build-job.yml
 
   bench:
-    uses: ./ci/bench-job.yml
+    uses: ./.github/workflows/ci/bench-job.yml
 
   sharding_test:
-    uses: ./ci/sharding-test-job.yml
+    uses: ./.github/workflows/ci/sharding-test-job.yml

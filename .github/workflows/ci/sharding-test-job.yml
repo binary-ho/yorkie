@@ -1,6 +1,7 @@
 name: Sharding Test
 
 on:
+  workflow-call:
   pull_request:
     branches: [ main ]
     paths:
