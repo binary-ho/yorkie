@@ -20,9 +20,9 @@ jobs:
     name: path-check
     runs-on: ubuntu-latest
     outputs:
-      build: ${{ steps.build-target-check.outputs.build }}
-      bench: ${{ steps.becnh-target-check.outputs.bench }}
-      sharding-test: ${{ steps.becnh-target-check.outputs.sharding-test }}
+      build: ${{ steps.outputs.outputs.build }}
+      bench: ${{ steps.outputs.outputs.bench }}
+      sharding-test: ${{ steps.outputs.sharding-test }}
 
     steps:
       - name: Check Build Target Path
@@ -31,7 +31,6 @@ jobs:
         with:
           filters: |
             build:
-        run: echo "build=${build}"
 
       - name: Check Benchmark Target Path
         uses: dorny/paths-filter@v3
@@ -41,7 +40,6 @@ jobs:
             bench: 
               - 'pkg/**'
               - 'server/packs/**'
-        run: echo "bench=${bench}"
 
       - name: Check Sharding Test Target Path
         uses: dorny/paths-filter@v3
@@ -50,8 +48,14 @@ jobs:
           filters: |
             sharding-test:
               - 'server/backend/database/**'
-        run: echo "sharding-test=${sharding-test}"
 
+      - name: Set Outputs
+        id: outputs
+        run: | 
+          echo "build=${build}"
+          echo "bench=${bench}"
+          echo "sharding-test=${sharding-test}"
+        
   build:
     name: build
     runs-on: ubuntu-latest
