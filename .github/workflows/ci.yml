@@ -16,6 +16,42 @@ env:
   GO_VERSION: '1.21'
 
 jobs:
+  path-check:
+    name: path-check
+    runs-on: ubuntu-latest
+    outputs:
+      build: ${{ steps.build-target-check.outputs.build }}
+      bench: ${{ steps.becnh-target-check.outputs.bench }}
+      sharding-test: ${{ steps.becnh-target-check.outputs.sharding-test }}
+
+    steps:
+      - name: Check Build Target Path
+        uses: dorny/paths-filter@v3
+        id: build-target-check
+        with:
+          filters: |
+            build:
+        run: echo "build=${build}"
+
+      - name: Check Benchmark Target Path
+        uses: dorny/paths-filter@v3
+        id: bench-target-check
+        with:
+          filters: |
+            bench: 
+              - 'pkg/**'
+              - 'server/packs/**'
+        run: echo "bench=${bench}"
+
+      - name: Check Sharding Test Target Path
+        uses: dorny/paths-filter@v3
+        id: sharding-test-target-check
+        with:
+          filters: |
+            sharding-test:
+              - 'server/backend/database/**'
+        run: echo "sharding-test=${sharding-test}"
+
   build:
     name: build
     runs-on: ubuntu-latest
@@ -58,26 +94,13 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-  path-check:
-    name: path-check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Test Target Path
-        uses: dorny/paths-filter@v3
-        id: bench-target-filter
-        with:
-          filters: |
-            is-bench-target: 
-              - 'pkg/**'
-              - 'server/packs/**'
-            is-sharding-test-target:
-              - 'server/backend/database/**'
-
   bench:
     name: bench
     runs-on: ubuntu-latest
     permissions: write-all
-    if: is-bench-target == true
+
+    needs: path-check
+    if: ${{ needs.path-check.outputs.bench }}
     steps:
 
       - name: Check Benchmark Target
@@ -127,7 +150,9 @@ jobs:
   sharding_test:
     name: sharding_test
     runs-on: ubuntu-latest
-    if: is-sharding-test-target == true
+
+    needs: path-check
+    if: ${{ needs.path-check.outputs.sharding-test }}
     steps:
 
       - name: Set up Go ${{ env.GO_VERSION }}
