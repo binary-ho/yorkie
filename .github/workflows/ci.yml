@@ -58,10 +58,26 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+  path-check:
+    name: path-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Test Target Path
+        uses: dorny/paths-filter@v3
+        id: bench-target-filter
+        with:
+          filters: |
+            is-bench-target: 
+              - 'pkg/**'
+              - 'server/packs/**'
+            is-sharding-test-target:
+              - 'server/backend/database/**'
+
   bench:
     name: bench
     runs-on: ubuntu-latest
     permissions: write-all
+    if: is-bench-target == true
     steps:
 
       - name: Check Benchmark Target
@@ -111,15 +127,8 @@ jobs:
   sharding_test:
     name: sharding_test
     runs-on: ubuntu-latest
+    if: is-sharding-test-target == true
     steps:
-
-      - name: Check Sharding Test Target
-        uses: dorny/paths-filter@v3
-        id: sharding-test-target-filter
-        with:
-          filters: |
-            sharding-test-target: 
-              - 'server/backend/database/**'
 
       - name: Set up Go ${{ env.GO_VERSION }}
         uses: actions/setup-go@v3
