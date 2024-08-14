@@ -21,5 +21,6 @@ import (
 )
 
 func main() {
+	// run build test
 	os.Exit(Run())
 }
