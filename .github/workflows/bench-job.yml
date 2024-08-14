@@ -1,7 +1,7 @@
 name: Bench
 
 on:
-  workflow-call:
+  workflow_call:
   pull_request:
     branches: [ main ]
     paths:

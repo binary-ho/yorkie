@@ -1,7 +1,7 @@
 name: Build
 
 on:
-  workflow-call:
+  workflow_call:
 
 env:
   GO_VERSION: '1.21'
