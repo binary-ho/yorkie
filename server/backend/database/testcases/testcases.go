@@ -46,8 +46,8 @@ const (
 	clientDeactivateThreshold = "1h"
 )
 
-// TODO(binary-ho) : Temporary comment For measure CI test time.
 // RunFindDocInfoTest runs the FindDocInfo test for the given db.
+// TODO(binary-ho) : Temporary comment For measure CI test time.
 func RunFindDocInfoTest(
 	t *testing.T,
 	db database.Database,
