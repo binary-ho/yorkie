@@ -30,7 +30,7 @@ proto: ## generate proto files
 	buf generate
 
 build: ## builds an executable that runs in the current environment
-	CGO_ENABLED=0 go build -o $(EXECUTABLE) -ldflags "${GO_LDFLAGS}" ./cmd/yorkie
+	go build -o $(EXECUTABLE) -ldflags "${GO_LDFLAGS}" ./cmd/yorkie
 
 build-binaries: ## builds binaries to attach a new release
 	rm -rf binaries
@@ -56,7 +56,7 @@ bench: ## runs benchmark tests
 	rm -f pipe output.txt mem.prof cpu.prof bench.test
 	mkfifo pipe
 	tee output.txt < pipe &
-	go test -tags bench -benchmem -bench=. ./test/bench -memprofile=mem.prof -cpuprofile=cpu.prof > pipe
+	go test -tags bench -parallel=2 -benchmem -bench=. ./test/bench -memprofile=mem.prof -cpuprofile=cpu.prof > pipe
 	rm -f pipe
 
 docker: ## builds docker images with the current version and latest tag
