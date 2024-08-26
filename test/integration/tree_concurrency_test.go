@@ -258,6 +258,7 @@ func RunTestTreeConcurrency(testDesc string, t *testing.T, initialState json.Tre
 }
 
 func TestTreeConcurrencyEditEdit(t *testing.T) {
+	t.Parallel()
 	//       0   1 2 3 4    5   6 7 8 9    10   11 12 13 14    15
 	// <root> <p> a b c </p> <p> d e f </p>  <p>  g  h  i  </p>  </root>
 
@@ -327,6 +328,7 @@ func TestTreeConcurrencyEditEdit(t *testing.T) {
 }
 
 func TestTreeConcurrencySplitSplit(t *testing.T) {
+	t.Parallel()
 	//       0   1   2   3   4 5 6 7 8    9   10 11 12 13 14    15    16   17 18 19 20 21    22    23    24
 	// <root> <p> <p> <p> <p> a b c d </p> <p>  e  f  g  h  </p>  </p>  <p>  i  j  k  l  </p>  </p>  </p>  </root>
 
@@ -374,6 +376,7 @@ func TestTreeConcurrencySplitSplit(t *testing.T) {
 }
 
 func TestTreeConcurrencySplitEdit(t *testing.T) {
+	t.Parallel()
 	//       0   1   2   3 4 5 6 7    8   9 10 11 12 13    14    15   16 17 18 19 20    21    22
 	// <root> <p> <p> <p> a b c d </p> <p> e  f  g  h  </p>  </p>  <p>  i  j  k  l  </p>  </p>  </root>
 
@@ -434,6 +437,7 @@ func TestTreeConcurrencySplitEdit(t *testing.T) {
 }
 
 func TestTreeConcurrencyStyleStyle(t *testing.T) {
+	t.Parallel()
 	//       0   1 2    3   4 5    6   7 8    9
 	// <root> <p> a </p> <p> b </p> <p> c </p> </root>
 	// 0,3 : |----------|
@@ -474,6 +478,7 @@ func TestTreeConcurrencyStyleStyle(t *testing.T) {
 }
 
 func TestTreeConcurrencyEditStyle(t *testing.T) {
+	t.Parallel()
 	//       0   1 2    3   4 5    6   7 8    9
 	// <root> <p> a </p> <p> b </p> <p> c </p> </root>
 	// 0,3 : |----------|

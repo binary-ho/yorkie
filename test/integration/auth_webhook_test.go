@@ -78,6 +78,8 @@ func newUnavailableAuthServer(t *testing.T, recoveryCnt uint64) *httptest.Server
 }
 
 func TestProjectAuthWebhook(t *testing.T) {
+	t.Parallel()
+
 	svr, err := server.New(helper.TestConfig())
 	assert.NoError(t, err)
 	assert.NoError(t, svr.Start())
