@@ -121,7 +121,7 @@ jobs:
     - name: Download previous benchmark data
       uses: actions/cache@v3
       with:
-        path: ./cache/benchmark-data.json
+        path: ./cache
         key: ${{ runner.os }}-benchmark
 
     - name: Store benchmark result
@@ -135,6 +135,16 @@ jobs:
         fail-on-alert: false
         github-token: ${{ secrets.GITHUB_TOKEN }}
         comment-always: true
+
+    - name: Compress and save cache
+      run: |
+        tar -I 'zstd -1' -cf cache.tar.zst -C ./cache .
+
+    - name: Upload compressed cache
+      uses: actions/cache@v3
+      with:
+        path: ./cache
+        key: ${{ runner.os }}-benchmark
 
   sharding-test:
     name: sharding-test
