@@ -82,36 +82,10 @@ jobs:
         if: steps.restore-cache.outputs.cache-hit != 'true'
         run: make tools
 
-      - name: List GOROOT
-        run: |
-          echo "List GOROOT"
-          ls -la $GOROOT
-
-      - name: List GOROOT pkg
-        run: |
-          echo "List GOROOT/pkg"
-          ls -la $GOROOT/pkg
-
-
-      - name: List GOPATH
-        run: |
-          echo "List GOPATH"
-          ls -la $GOPATH
-
-      - name: List installed binaries
-        run: |
-          echo "List GOPATH/bin: $GOPATH/bin"
-          ls -la $GOPATH/bin
-
-      - name: List installed modules
-        run: |
-          echo "List GOPATH/pkg $GOPATH/pkg:"
-          ls -la $GOPATH/pkg
-
       - name: Compress Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
         run: |
-          tar -czf $GOPATH/pkg.tar.gz -C $GOPATH/pkg
+          tar -czf $GOPATH/pkg.tar.gz -C $GOPATH/pkg .
 
       - name: Store Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
