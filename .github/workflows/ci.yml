@@ -83,12 +83,12 @@ jobs:
         run: make tools
 
       - name: Compress and save Go pkg if cache not exists
-        if: steps.restore-cache.outputs.cache-hit == 'false'
+        if: steps.restore-cache.outputs.cache-hit != 'true'
         run: |
           tar -czf $(go env GOPATH)/pkg.tar.gz -C $(go env GOPATH) pkg
 
       - name: Store Go pkg if cache not exists
-        if: steps.restore-cache.outputs.cache-hit == 'false'
+        if: steps.restore-cache.outputs.cache-hit != 'true'
         uses: actions/cache@v3
         with:
           path: $(go env GOPATH)/pkg.tar.gz
