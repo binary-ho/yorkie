@@ -63,7 +63,7 @@ jobs:
 
       - name: Save GOPATH to environment variables
         run: |
-          echo "GOPATH=$GOPATH" >> $GITHUB_ENV
+          echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
 
       - name: Echo GOPATH (Test)
         run: |
