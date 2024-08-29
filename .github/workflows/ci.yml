@@ -65,6 +65,11 @@ jobs:
         run: |
           echo "GOPATH=$GOPATH" >> $GITHUB_ENV
 
+      - name: Echo GOPATH (Test)
+        run: |
+          echo "$GOPATH"
+          echo "$(go env GOPATH)"
+
       - name: Check out code
         uses: actions/checkout@v4
 
