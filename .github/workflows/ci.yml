@@ -129,6 +129,7 @@ jobs:
     - name: Decompress Go pkg if cache exists
       run: |
         if [ -f "$GOPATH/pkg.tar.zst" ]; then
+          mkdir -p $GOPATH/pkg
           tar -I 'zstd -d' -xf $GOPATH/pkg.tar.zst -C $GOPATH/pkg
         fi
 
@@ -190,6 +191,7 @@ jobs:
     - name: Decompress Go pkg if cache exists
       run: |
         if [ -f "$GOPATH/pkg.tar.zst" ]; then
+          mkdir -p $GOPATH/pkg
           tar -I 'zstd -d' -xf $GOPATH/pkg.tar.zst -C $GOPATH/pkg
         fi
 
@@ -262,6 +264,7 @@ jobs:
     - name: Decompress Go pkg if cache exists
       run: |
         if [ -f "$GOPATH/pkg.tar.zst" ]; then
+          mkdir -p $GOPATH/pkg
           tar -I 'zstd -d' -xf $GOPATH/pkg.tar.zst -C $GOPATH/pkg
         fi
 
