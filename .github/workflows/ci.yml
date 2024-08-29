@@ -86,12 +86,24 @@ jobs:
         run: |
           tar -I 'zstd -1' -cf $GOPATH/pkg.tar.zst -C $GOPATH/pkg .
           echo "Listing installed modules in $GOPATH/pkg"
-          ls -la $GOPATH/pkg
           if [ -f "$GOPATH/pkg.tar.zst" ]; then
-            echo "========== Compression success: $GOPATH/pkg.tar.gz ============="
+              echo "========== Compression success: $GOPATH/pkg.tar.zst ============="
+              ls -la $GOPATH/pkg.tar.zst
           else
-            echo "============ Compression failed: $GOPATH/pkg.tar.gz not found ============="
+            echo "============ Compression failed: $GOPATH/pkg.tar.zst not found ============="
           exit 1
+          fi
+
+      - name: Validate tar.zst file exists before saving cache
+        if: steps.restore-cache.outputs.cache-hit != 'true'
+        run: |
+          echo "Checking if cache file exists..."
+          ls -la $GOPATH/pkg.tar.zst
+          if [ -f "$GOPATH/pkg.tar.zst" ]; then
+            echo "Cache file is ready to be saved."
+          else
+            echo "Cache file not found before saving!"
+            exit 1
           fi
 
       - name: Store Go pkg if cache not exists
