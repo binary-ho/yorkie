@@ -131,6 +131,7 @@ jobs:
         if [ -f "$GOPATH/pkg.tar.zst" ]; then
           mkdir -p $GOPATH/pkg
           tar -I 'zstd -d' -xf $GOPATH/pkg.tar.zst -C $GOPATH/pkg
+          ls -la $GOPATH/pkg
         fi
 
     - name: Get tools dependencies
