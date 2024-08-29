@@ -85,7 +85,6 @@ jobs:
       - name: Compress Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
         run: |
-#          tar -czf $GOPATH/pkg.tar.gz -C $GOPATH/pkg .
           tar -I 'zstd -1' -cf $GOPATH/pkg.tar.zst -C $GOPATH/pkg .
 
       - name: Store Go pkg if cache not exists
