@@ -64,7 +64,6 @@ jobs:
       - name: Save GOPATH to environment variables
         run: |
           echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
-          echo "GOROOT=$(go env GOROOT)" >> $GITHUB_ENV
 
       - name: Check out code
         uses: actions/checkout@v4
@@ -86,6 +85,14 @@ jobs:
         if: steps.restore-cache.outputs.cache-hit != 'true'
         run: |
           tar -I 'zstd -1' -cf $GOPATH/pkg.tar.zst -C $GOPATH/pkg .
+          echo "Listing installed modules in $GOPATH/pkg"
+          ls -la $GOPATH/pkg
+          if [ -f "$GOPATH/pkg.tar.zst" ]; then
+            echo "========== Compression success: $GOPATH/pkg.tar.gz ============="
+          else
+            echo "============ Compression failed: $GOPATH/pkg.tar.gz not found ============="
+          exit 1
+          fi
 
       - name: Store Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
