@@ -73,7 +73,7 @@ jobs:
         uses: actions/cache@v3
         id: restore-cache
         with:
-          path: $GOPATH/pkg.tar.gz
+          path: $GOPATH/pkg.tar.zst
           key: ${{ runner.os }}-pkg-${{ hashFiles('Makefile') }}
           restore-keys: |
             ${{ runner.os }}-pkg-
@@ -85,13 +85,14 @@ jobs:
       - name: Compress Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
         run: |
-          tar -czf $GOPATH/pkg.tar.gz -C $GOPATH/pkg .
+#          tar -czf $GOPATH/pkg.tar.gz -C $GOPATH/pkg .
+          tar -I 'zstd -1' -cf $GOPATH/pkg.tar.zst -C $GOPATH/pkg .
 
       - name: Store Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v3
         with:
-          path: $GOPATH/pkg.tar.gz
+          path: $GOPATH/pkg.tar.zst
           key: ${{ runner.os }}-pkg-${{ hashFiles('Makefile') }}
 
   build:
@@ -118,15 +119,15 @@ jobs:
     - name: Restore Go pkg cache
       uses: actions/cache@v3
       with:
-        path: $GOPATH/pkg.tar.gz
+        path: $GOPATH/pkg.tar.zst
         key: ${{ runner.os }}-pkg-${{ hashFiles('Makefile') }}
         restore-keys: |
           ${{ runner.os }}-pkg-
 
     - name: Decompress Go pkg if cache exists
       run: |
-        if [ -f "$GOPATH/pkg.tar.gz" ]; then
-          tar -xzf $GOPATH/pkg.tar.gz -C $GOPATH
+        if [ -f "$GOPATH/pkg.tar.zst" ]; then
+          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH
         fi
 
     - name: Get tools dependencies
@@ -175,15 +176,15 @@ jobs:
     - name: Restore Go pkg cache
       uses: actions/cache@v3
       with:
-        path: $GOPATH/pkg.tar.gz
+        path: $GOPATH/pkg.tar.zst
         key: ${{ runner.os }}-pkg-${{ hashFiles('Makefile') }}
         restore-keys: |
           ${{ runner.os }}-pkg-
 
     - name: Decompress Go pkg if cache exists
       run: |
-        if [ -f "$GOPATH/pkg.tar.gz" ]; then
-          tar -xzf $GOPATH/pkg.tar.gz -C $GOPATH
+        if [ -f "$GOPATH/pkg.tar.zst" ]; then
+          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH
         fi
 
     - name: Get tools dependencies
@@ -243,15 +244,15 @@ jobs:
     - name: Restore Go pkg cache
       uses: actions/cache@v3
       with:
-        path: $GOPATH/pkg.tar.gz
+        path: $GOPATH/pkg.tar.zst
         key: ${{ runner.os }}-pkg-${{ hashFiles('Makefile') }}
         restore-keys: |
           ${{ runner.os }}-pkg-
 
     - name: Decompress Go pkg if cache exists
       run: |
-        if [ -f "$GOPATH/pkg.tar.gz" ]; then
-          tar -xzf $GOPATH/pkg.tar.gz -C $GOPATH
+        if [ -f "$GOPATH/pkg.tar.zst" ]; then
+          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH
         fi
 
     - name: Get tools dependencies
