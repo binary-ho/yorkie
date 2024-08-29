@@ -84,7 +84,7 @@ jobs:
 
       - name: Store Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
-        uses: actions/cache@v3
+        uses: actions/cache/save@v3
         with:
           path: $(go env GOPATH)/pkg.tar.gz
           key: ${{ runner.os }}-pkg-${{ hashFiles('Makefile') }}
