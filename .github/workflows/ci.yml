@@ -65,11 +65,6 @@ jobs:
         run: |
           echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
 
-      - name: Echo GOPATH (Test)
-        run: |
-          echo "$GOPATH"
-          echo "$(go env GOPATH)"
-
       - name: Check out code
         uses: actions/checkout@v4
 
@@ -89,7 +84,7 @@ jobs:
       - name: Compress Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
         run: |
-          tar -czf $GOPATH/pkg.tar.gz -C $GOPATH pkg
+          tar -czf $GOPATH/pkg.tar.gz -C $GOPATH/pkg
 
       - name: Store Go pkg if cache not exists
         if: steps.restore-cache.outputs.cache-hit != 'true'
