@@ -126,7 +126,7 @@ jobs:
     - name: Decompress Go pkg if cache exists
       run: |
         if [ -f "$GOPATH/pkg.tar.zst" ]; then
-          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH
+          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH/pkg
         fi
 
     - name: Get tools dependencies
@@ -183,7 +183,7 @@ jobs:
     - name: Decompress Go pkg if cache exists
       run: |
         if [ -f "$GOPATH/pkg.tar.zst" ]; then
-          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH
+          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH/pkg
         fi
 
     - name: Get tools dependencies
@@ -251,7 +251,7 @@ jobs:
     - name: Decompress Go pkg if cache exists
       run: |
         if [ -f "$GOPATH/pkg.tar.zst" ]; then
-          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH
+          tar -xzf $GOPATH/pkg.tar.zst -C $GOPATH/pkg
         fi
 
     - name: Get tools dependencies
