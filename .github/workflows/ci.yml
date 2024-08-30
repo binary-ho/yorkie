@@ -133,9 +133,6 @@ jobs:
           tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
         fi
 
-    - name: Get tools dependencies
-      run: make tools
-
     - name: Lint
       run: make lint
 
@@ -194,9 +191,6 @@ jobs:
           mkdir -p $GOPATH/pkg
           tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
         fi
-
-    - name: Get tools dependencies
-      run: make tools
 
     - name: Stack
       run: docker compose -f build/docker/docker-compose.yml up --build -d
@@ -267,9 +261,6 @@ jobs:
           mkdir -p $GOPATH/pkg
           tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
         fi
-
-    - name: Get tools dependencies
-      run: make tools
 
     - name: Check Docker Compose Version
       run: docker compose --version
