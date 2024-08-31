@@ -62,6 +62,7 @@ func setupMongoClient(databaseName string) (*mongo.Client, error) {
 }
 
 func TestClientWithShardedDB(t *testing.T) {
+	t.Parallel()
 	// Cleanup the previous data in DB
 	assert.NoError(t, helper.CleanUpAllCollections(shardedDBNameForMongoClient))
 
