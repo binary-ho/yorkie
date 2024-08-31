@@ -102,6 +102,9 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
+    - name: Save GOPATH to environment variables
+      run: echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
+
     - name: Setup buf action
       uses: bufbuild/buf-setup-action@v1
       with:
@@ -113,7 +116,7 @@ jobs:
     - name: Restore Go pkg cache
       uses: actions/cache@v3
       with:
-        path: ~/gopath.tar.zst
+        path: ${{ env.GOPATH }}/gopath.tar.zst
         key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
         restore-keys: |
           ${{ runner.os }}-gopath-
