@@ -15,6 +15,7 @@ on:
 
 env:
   GO_VERSION: '1.21'
+  GOPATH: '~'
 
 jobs:
   ci-target-check:
@@ -195,9 +196,6 @@ jobs:
           tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
         fi
 
-    - name: Get tools dependencies if cache not exists
-      run: make tools
-
     - name: Stack
       run: docker compose -f build/docker/docker-compose.yml up --build -d
 
@@ -267,9 +265,6 @@ jobs:
           mkdir -p $GOPATH/pkg
           tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
         fi
-
-    - name: Get tools dependencies if cache not exists
-      run: make tools
 
     - name: Check Docker Compose Version
       run: docker compose --version
