@@ -134,99 +134,80 @@ func TestMain(m *testing.M) {
 
 func TestSDKRPCServerBackendWithShardedDB(t *testing.T) {
 	t.Run("activate/deactivate client test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunActivateAndDeactivateClientTest(t, testClient)
 	})
 
 	t.Run("attach/detach document test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAttachAndDetachDocumentTest(t, testClient)
 	})
 
 	t.Run("attach/detach on removed document test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAttachAndDetachRemovedDocumentTest(t, testClient)
 	})
 
 	t.Run("push/pull changes test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunPushPullChangeTest(t, testClient)
 	})
 
 	t.Run("push/pull on removed document test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunPushPullChangeOnRemovedDocumentTest(t, testClient)
 	})
 
 	t.Run("remove document test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunRemoveDocumentTest(t, testClient)
 	})
 
 	t.Run("remove document with invalid client state test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunRemoveDocumentWithInvalidClientStateTest(t, testClient)
 	})
 
 	t.Run("watch document test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunWatchDocumentTest(t, testClient)
 	})
 }
 
 func TestAdminRPCServerBackendWithShardedDB(t *testing.T) {
 	t.Run("admin signup test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminSignUpTest(t, testAdminClient)
 	})
 
 	t.Run("admin login test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminLoginTest(t, testAdminClient)
 	})
 
 	t.Run("admin delete account test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminDeleteAccountTest(t, testAdminClient)
 	})
 
 	t.Run("admin change password test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminChangePasswordTest(t, testAdminClient)
 	})
 
 	t.Run("admin create project test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminCreateProjectTest(t, testAdminClient, testAdminAuthInterceptor)
 	})
 
 	t.Run("admin list projects test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminListProjectsTest(t, testAdminClient, testAdminAuthInterceptor)
 	})
 
 	t.Run("admin get project test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminGetProjectTest(t, testAdminClient, testAdminAuthInterceptor)
 	})
 
 	t.Run("admin update project test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminUpdateProjectTest(t, testAdminClient, testAdminAuthInterceptor)
 	})
 
 	t.Run("admin list documents test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminListDocumentsTest(t, testAdminClient, testAdminAuthInterceptor)
 	})
 
 	t.Run("admin get document test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminGetDocumentTest(t, testClient, testAdminClient, testAdminAuthInterceptor)
 	})
 
 	t.Run("admin list changes test", func(t *testing.T) {
-		t.Parallel()
 		testcases.RunAdminListChangesTest(t, testClient, testAdminClient, testAdminAuthInterceptor)
 	})
 }
