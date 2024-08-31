@@ -26,6 +26,7 @@ import (
 )
 
 func TestUpdatableProjectFields(t *testing.T) {
+	t.Parallel()
 	var structError *validation.StructError
 	t.Run("validation test", func(t *testing.T) {
 		newName := "changed-name"

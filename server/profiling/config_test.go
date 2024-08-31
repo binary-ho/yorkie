@@ -25,6 +25,7 @@ import (
 )
 
 func TestConfig(t *testing.T) {
+	t.Parallel()
 	scenarios := []*struct {
 		config   *profiling.Config
 		expected error

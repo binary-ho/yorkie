@@ -29,6 +29,7 @@ import (
 )
 
 func TestTreeGC(t *testing.T) {
+	t.Parallel()
 	type opCode int
 	const (
 		NoOp opCode = iota
@@ -147,6 +148,7 @@ func TestTreeGC(t *testing.T) {
 }
 
 func TestTextGC(t *testing.T) {
+	t.Parallel()
 	type opCode int
 	const (
 		NoOp opCode = iota

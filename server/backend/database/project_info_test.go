@@ -26,6 +26,7 @@ import (
 )
 
 func TestProjectInfo(t *testing.T) {
+	t.Parallel()
 	t.Run("update fields test", func(t *testing.T) {
 		dummyOwnerID := types.ID("000000000000000000000000")
 		clientDeactivateThreshold := "1h"

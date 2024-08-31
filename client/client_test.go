@@ -68,6 +68,7 @@ func (s *testYorkieServer) Stop() {
 }
 
 func TestClient(t *testing.T) {
+	t.Parallel()
 	t.Run("create instance test", func(t *testing.T) {
 		_, err := client.New(
 			client.WithToken(xid.New().String()),

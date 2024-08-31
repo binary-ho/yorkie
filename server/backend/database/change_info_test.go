@@ -28,6 +28,7 @@ import (
 )
 
 func TestChangeInfo(t *testing.T) {
+	t.Parallel()
 	t.Run("comparing actorID equals after calling ToChange test", func(t *testing.T) {
 		actorID := time.ActorID{}
 		_, err := rand.Read(actorID.Bytes())

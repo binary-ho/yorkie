@@ -11,6 +11,7 @@ import (
 )
 
 func TestActorID(t *testing.T) {
+	t.Parallel()
 	t.Run("get ActorID from hex test", func(t *testing.T) {
 		actorID := time.ActorID{}
 		_, err := rand.Read(actorID.Bytes())

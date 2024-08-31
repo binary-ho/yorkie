@@ -29,6 +29,7 @@ import (
 )
 
 func TestPrimitive(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		value     interface{}
 		valueType crdt.ValueType

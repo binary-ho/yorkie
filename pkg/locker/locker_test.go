@@ -28,6 +28,7 @@ import (
 )
 
 func TestLockCounter(t *testing.T) {
+	t.Parallel()
 	l := &lockCtr{}
 	l.inc()
 
@@ -42,6 +43,7 @@ func TestLockCounter(t *testing.T) {
 }
 
 func TestLockerLock(t *testing.T) {
+	t.Parallel()
 	l := New()
 	l.Lock("test")
 	ctr := l.locks["test"]
@@ -94,6 +96,7 @@ func TestLockerLock(t *testing.T) {
 }
 
 func TestLockerUnlock(t *testing.T) {
+	t.Parallel()
 	l := New()
 
 	l.Lock("test")
@@ -113,6 +116,7 @@ func TestLockerUnlock(t *testing.T) {
 }
 
 func TestLockerConcurrency(t *testing.T) {
+	t.Parallel()
 	l := New()
 
 	var wg sync.WaitGroup
@@ -145,6 +149,7 @@ func TestLockerConcurrency(t *testing.T) {
 }
 
 func TestTryLock(t *testing.T) {
+	t.Parallel()
 	l := New()
 
 	for i := 0; i < 2; i++ {

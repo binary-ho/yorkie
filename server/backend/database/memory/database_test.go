@@ -33,6 +33,8 @@ const (
 )
 
 func TestDB(t *testing.T) {
+	t.Parallel()
+
 	db, err := memory.New()
 	assert.NoError(t, err)
 

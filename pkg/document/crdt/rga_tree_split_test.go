@@ -10,6 +10,7 @@ import (
 )
 
 func TestRGATreeSplit(t *testing.T) {
+	t.Parallel()
 	t.Run("compare nil id panic test", func(t *testing.T) {
 		id := crdt.NewRGATreeSplitNodeID(time.InitialTicket, 0)
 		assert.Panics(t, func() { id.Compare(nil) }, "ID cannot be null")

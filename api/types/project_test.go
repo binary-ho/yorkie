@@ -25,6 +25,7 @@ import (
 )
 
 func TestProjectInfo(t *testing.T) {
+	t.Parallel()
 	t.Run("require auth test", func(t *testing.T) {
 		// 1. Specify which methods to allow
 		validWebhookURL := "ValidWebhookURL"

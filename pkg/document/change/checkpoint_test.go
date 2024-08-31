@@ -25,6 +25,7 @@ import (
 )
 
 func TestCheckPoint(t *testing.T) {
+	t.Parallel()
 	t.Run("check point test", func(t *testing.T) {
 		cp := change.NewCheckpoint(change.InitialServerSeq, change.InitialClientSeq)
 		assert.True(t, cp.Equals(change.NewCheckpoint(0, 0)))

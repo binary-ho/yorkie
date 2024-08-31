@@ -10,6 +10,7 @@ import (
 )
 
 func TestRHT_DeepCopy(t *testing.T) {
+	t.Parallel()
 	root := helper.TestRoot()
 	ctx := helper.TextChangeContext(root)
 
@@ -23,6 +24,7 @@ func TestRHT_DeepCopy(t *testing.T) {
 }
 
 func TestRHT_Marshal(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		desc      string
 		insertKey string
@@ -65,6 +67,7 @@ func TestRHT_Marshal(t *testing.T) {
 }
 
 func TestRHT_Set(t *testing.T) {
+	t.Parallel()
 	key1, val1 := `key1`, `value1`
 	key2, val2 := `key2`, `value2`
 
@@ -108,6 +111,7 @@ func TestRHT_Set(t *testing.T) {
 }
 
 func TestRHT_Remove(t *testing.T) {
+	t.Parallel()
 	key1, val1, val11 := `key1`, `value1`, `value11`
 	key2, val2, val22 := `key2`, `value2`, `value22`
 

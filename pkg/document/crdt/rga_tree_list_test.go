@@ -10,6 +10,7 @@ import (
 )
 
 func TestRGATreeList(t *testing.T) {
+	t.Parallel()
 	t.Run("rga_tree_list operations test", func(t *testing.T) {
 		root := helper.TestRoot()
 		ctx := helper.TextChangeContext(root)

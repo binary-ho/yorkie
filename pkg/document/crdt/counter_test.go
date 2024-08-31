@@ -29,6 +29,7 @@ import (
 )
 
 func TestCounter(t *testing.T) {
+	t.Parallel()
 	t.Run("new counter test", func(t *testing.T) {
 		intCntWithInt32Value, err := crdt.NewCounter(crdt.IntegerCnt, int32(math.MaxInt32), time.InitialTicket)
 		assert.NoError(t, err)

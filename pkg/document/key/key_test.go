@@ -24,6 +24,7 @@ import (
 )
 
 func TestKey(t *testing.T) {
+	t.Parallel()
 	t.Run("valid key test", func(t *testing.T) {
 		err := Key("valid-key").Validate()
 		assert.Nil(t, err, "key should be valid")

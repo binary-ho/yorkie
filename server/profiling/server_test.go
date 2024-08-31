@@ -31,6 +31,7 @@ var (
 )
 
 func TestMetricsServer(t *testing.T) {
+	t.Parallel()
 	t.Run("new server test", func(t *testing.T) {
 		server := profiling.NewServer(&profiling.Config{Port: testProfilingPort}, nil)
 		assert.NotNil(t, server)

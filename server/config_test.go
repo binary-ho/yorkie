@@ -27,6 +27,7 @@ import (
 )
 
 func TestNewConfigFromFile(t *testing.T) {
+	t.Parallel()
 	t.Run("fail read config file test", func(t *testing.T) {
 		conf := server.NewConfig()
 		assert.Equal(t, conf.RPCAddr(), "localhost:"+strconv.Itoa(server.DefaultRPCPort))

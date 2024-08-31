@@ -30,6 +30,7 @@ import (
 )
 
 func TestPubSub(t *testing.T) {
+	t.Parallel()
 	idA, err := time.ActorIDFromBytes([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0})
 	assert.NoError(t, err)
 	idB, err := time.ActorIDFromBytes([]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})

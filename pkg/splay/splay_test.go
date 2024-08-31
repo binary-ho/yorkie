@@ -47,6 +47,7 @@ func (v *stringValue) String() string {
 }
 
 func TestSplayTree(t *testing.T) {
+	t.Parallel()
 	t.Run("insert and splay test", func(t *testing.T) {
 		tree := splay.NewTree[*stringValue](nil)
 

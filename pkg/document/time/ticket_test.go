@@ -9,6 +9,7 @@ import (
 )
 
 func TestTicket(t *testing.T) {
+	t.Parallel()
 	t.Run("get hex from actorId of ticket test", func(t *testing.T) {
 		actorID, _ := time.ActorIDFromHex("0123456789abcdef01234567")
 		ticket := time.NewTicket(0, 0, actorID)
