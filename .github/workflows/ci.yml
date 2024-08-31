@@ -80,7 +80,7 @@ jobs:
     - name: Compress Go pkg if cache not exists
       if: steps.restore-pkg.outputs.cache-hit != 'true'
       run: |
-        tar -I 'zstd -22' -cf ~/go/gopath.tar.zst -C ~/go pkg bin
+        tar -I 'zstd -3' -cf ~/go/gopath.tar.zst -C ~/go pkg bin
 
     - name: Store Go pkg if cache not exists
       if: steps.restore-pkg.outputs.cache-hit != 'true'
@@ -168,21 +168,6 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v4
 
-    - name: Restore Go pkg cache
-      uses: actions/cache@v3
-      with:
-        path: ~/go/gopath.tar.zst
-        key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
-        restore-keys: |
-          ${{ runner.os }}-gopath-
-
-    - name: Decompress Go pkg if cache exists
-      run: |
-        if [ -f "~/go/gopath.tar.zst" ]; then
-          mkdir -p ~/go/pkg
-          tar -I 'zstd -d' -xf ~/go/gopath.tar.zst -C ~/go
-        fi
-
     - name: Stack
       run: docker compose -f build/docker/docker-compose.yml up --build -d
 
@@ -233,21 +218,6 @@ jobs:
 
     - name: Check out code
       uses: actions/checkout@v4
-
-    - name: Restore Go pkg cache
-      uses: actions/cache@v3
-      with:
-        path: ~/go/gopath.tar.zst
-        key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
-        restore-keys: |
-          ${{ runner.os }}-gopath-
-
-    - name: Decompress Go pkg if cache exists
-      run: |
-        if [ -f "~/go/gopath.tar.zst" ]; then
-          mkdir -p ~/go/pkg
-          tar -I 'zstd -d' -xf ~/go/gopath.tar.zst -C ~/go
-        fi
 
     - name: Check Docker Compose Version
       run: docker compose --version
