@@ -125,9 +125,6 @@ jobs:
           tar -I 'zstd -d' -xf ~/go/gopath.tar.zst -C ~/go
         fi
 
-    - name: Get tools dependencies if cache not exists
-      run: make tools
-
     - name: Lint
       run: make lint
 
