@@ -73,7 +73,7 @@ jobs:
       uses: actions/cache@v3
       id: restore-pkg
       with:
-        path: ${{ env.GOPATH }}/gopath.tar.zst
+        path: ~/go/gopath.tar.zst
         key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
         restore-keys: |
           ${{ runner.os }}-gopath-
@@ -91,7 +91,7 @@ jobs:
       if: steps.restore-pkg.outputs.cache-hit != 'true'
       uses: actions/cache/save@v3
       with:
-        path: ${{ env.GOPATH }}/gopath.tar.zst
+        path: ~/go/gopath.tar.zst
         key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
 
   build:
@@ -122,7 +122,7 @@ jobs:
     - name: Restore Go pkg cache
       uses: actions/cache@v3
       with:
-        path: ${{ env.GOPATH }}/gopath.tar.zst
+        path: ~/go/gopath.tar.zst
         key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
         restore-keys: |
           ${{ runner.os }}-gopath-
@@ -184,7 +184,7 @@ jobs:
     - name: Restore Go pkg cache
       uses: actions/cache@v3
       with:
-        path: ${{ env.GOPATH }}/gopath.tar.zst
+        path: ~/go/gopath.tar.zst
         key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
         restore-keys: |
           ${{ runner.os }}-gopath-
@@ -254,7 +254,7 @@ jobs:
     - name: Restore Go pkg cache
       uses: actions/cache@v3
       with:
-        path: ${{ env.GOPATH }}/gopath.tar.zst
+        path: ~/go/gopath.tar.zst
         key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
         restore-keys: |
           ${{ runner.os }}-gopath-
