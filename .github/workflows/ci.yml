@@ -15,7 +15,6 @@ on:
 
 env:
   GO_VERSION: '1.21'
-  GOPATH: '~'
 
 jobs:
   ci-target-check:
@@ -62,8 +61,6 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    
-
     - name: Check out code
       uses: actions/checkout@v4
 
@@ -83,7 +80,7 @@ jobs:
     - name: Compress Go pkg if cache not exists
       if: steps.restore-pkg.outputs.cache-hit != 'true'
       run: |
-        tar -I 'zstd -22' -cf $GOPATH/gopath.tar.zst -C $GOPATH pkg bin
+        tar -I 'zstd -22' -cf ~/go/gopath.tar.zst -C ~/go pkg bin
 
     - name: Store Go pkg if cache not exists
       if: steps.restore-pkg.outputs.cache-hit != 'true'
@@ -105,8 +102,6 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    
-
     - name: Setup buf action
       uses: bufbuild/buf-setup-action@v1
       with:
@@ -125,9 +120,9 @@ jobs:
 
     - name: Decompress Go pkg if cache exists
       run: |
-        if [ -f "$GOPATH/gopath.tar.zst" ]; then
-          mkdir -p $GOPATH/pkg
-          tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
+        if [ -f "~/go/gopath.tar.zst" ]; then
+          mkdir -p ~/go/pkg
+          tar -I 'zstd -d' -xf ~/go/gopath.tar.zst -C ~/go
         fi
 
     - name: Get tools dependencies if cache not exists
@@ -170,8 +165,6 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    
-
     - name: Check out code
       uses: actions/checkout@v4
 
@@ -185,9 +178,9 @@ jobs:
 
     - name: Decompress Go pkg if cache exists
       run: |
-        if [ -f "$GOPATH/gopath.tar.zst" ]; then
-          mkdir -p $GOPATH/pkg
-          tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
+        if [ -f "~/go/gopath.tar.zst" ]; then
+          mkdir -p ~/go/pkg
+          tar -I 'zstd -d' -xf ~/go/gopath.tar.zst -C ~/go
         fi
 
     - name: Stack
@@ -238,8 +231,6 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
-    
-
     - name: Check out code
       uses: actions/checkout@v4
 
@@ -253,9 +244,9 @@ jobs:
 
     - name: Decompress Go pkg if cache exists
       run: |
-        if [ -f "$GOPATH/gopath.tar.zst" ]; then
-          mkdir -p $GOPATH/pkg
-          tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
+        if [ -f "~/go/gopath.tar.zst" ]; then
+          mkdir -p ~/go/pkg
+          tar -I 'zstd -d' -xf ~/go/gopath.tar.zst -C ~/go
         fi
 
     - name: Check Docker Compose Version
