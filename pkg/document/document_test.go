@@ -38,7 +38,6 @@ var (
 )
 
 func TestDocument(t *testing.T) {
-	t.Parallel()
 	t.Run("constructor test", func(t *testing.T) {
 		doc := document.New("d1")
 		assert.Equal(t, doc.Checkpoint(), change.InitialCheckpoint)
