@@ -74,12 +74,7 @@ jobs:
           ${{ runner.os }}-gopath-
 
     - name: Get tools dependencies if cache not exists
-      run: make tools
-
-    - name: Get tools dependencies if cache not exists
-      run: make tools
-
-    - name: Get tools dependencies if cache not exists
+      if: steps.restore-pkg.outputs.cache-hit != 'true'
       run: make tools
 
     - name: Compress Go pkg if cache not exists
@@ -132,6 +127,9 @@ jobs:
           mkdir -p $GOPATH/pkg
           tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
         fi
+
+    - name: Get tools dependencies if cache not exists
+      run: make tools
 
     - name: Lint
       run: make lint
