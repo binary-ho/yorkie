@@ -1,4 +1,4 @@
-//go:build integration
+//go:build sharding
 
 /*
  * Copyright 2024 The Yorkie Authors. All rights reserved.
@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package integration
+package sharding
 
 import (
 	"context"
@@ -532,4 +532,24 @@ func TestTreeConcurrencyEditStyle(t *testing.T) {
 	}
 
 	RunTestTreeConcurrency("concurrently-edit-style-test", t, initialState, initialXML, ranges, editOperations, styleOperations)
+}
+
+// activeClients creates and activates the given number of clients.
+func activeClients(t *testing.T, n int) (clients []*client.Client) {
+	for i := 0; i < n; i++ {
+		c, err := client.Dial(testRPCAddr)
+		assert.NoError(t, err)
+		assert.NoError(t, c.Activate(context.Background()))
+
+		clients = append(clients, c)
+	}
+	return
+}
+
+// deactivateAndCloseClients deactivates and closes the given clients.
+func deactivateAndCloseClients(t *testing.T, clients []*client.Client) {
+	for _, c := range clients {
+		assert.NoError(t, c.Deactivate(context.Background()))
+		assert.NoError(t, c.Close())
+	}
 }
