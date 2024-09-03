@@ -28,6 +28,7 @@ import (
 )
 
 func TestCoordinator(t *testing.T) {
+	t.Parallel()
 	t.Run("subscriptions map test", func(t *testing.T) {
 		coordinator := memory.NewCoordinator(nil)
 		docRefKey := types.DocRefKey{

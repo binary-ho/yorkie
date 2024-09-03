@@ -23,6 +23,7 @@ import (
 )
 
 func TestValidation(t *testing.T) {
+	t.Parallel()
 	t.Run("ValidateValue test", func(t *testing.T) {
 		err := ValidateValue("valid-key", "required,slug,min=4,max=30")
 		assert.Nil(t, err, "valid key")

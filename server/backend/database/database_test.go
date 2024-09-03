@@ -25,6 +25,7 @@ import (
 )
 
 func TestID(t *testing.T) {
+	t.Parallel()
 	t.Run("get ID from hex test", func(t *testing.T) {
 		str := "0123456789abcdef01234567"
 		ID := types.ID(str)

@@ -25,6 +25,7 @@ import (
 )
 
 func TestConfig(t *testing.T) {
+	t.Parallel()
 	t.Run("validate test", func(t *testing.T) {
 		validConf := housekeeping.Config{
 			Interval:                  "1m",

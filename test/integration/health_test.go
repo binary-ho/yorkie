@@ -40,6 +40,8 @@ var services = []string{
 }
 
 func TestRPCHealthCheck(t *testing.T) {
+	t.Parallel()
+
 	conn, err := grpc.Dial(
 		defaultServer.RPCAddr(),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),

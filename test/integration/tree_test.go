@@ -23,7 +23,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-
 	"github.com/yorkie-team/yorkie/api/converter"
 	"github.com/yorkie-team/yorkie/pkg/document"
 	"github.com/yorkie-team/yorkie/pkg/document/crdt"
@@ -34,6 +33,8 @@ import (
 )
 
 func TestTree(t *testing.T) {
+	t.Parallel()
+
 	clients := activeClients(t, 2)
 	c1, c2 := clients[0], clients[1]
 	defer deactivateAndCloseClients(t, clients)

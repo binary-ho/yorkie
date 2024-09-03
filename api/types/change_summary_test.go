@@ -25,6 +25,7 @@ import (
 )
 
 func TestChangeSummary(t *testing.T) {
+	t.Parallel()
 	t.Run("get changes range test", func(t *testing.T) {
 		lastSeq := int64(10)
 		var from, to int64

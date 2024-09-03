@@ -35,6 +35,7 @@ import (
 )
 
 func TestConverter(t *testing.T) {
+	t.Parallel()
 	t.Run("snapshot simple test", func(t *testing.T) {
 		doc := document.New("d1")
 		err := doc.Update(func(root *json.Object, p *presence.Presence) error {

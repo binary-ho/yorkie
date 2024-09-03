@@ -30,7 +30,7 @@ proto: ## generate proto files
 	buf generate
 
 build: ## builds an executable that runs in the current environment
-	CGO_ENABLED=0 go build -o $(EXECUTABLE) -ldflags "${GO_LDFLAGS}" ./cmd/yorkie
+	go build -o $(EXECUTABLE) -ldflags "${GO_LDFLAGS}" ./cmd/yorkie
 
 build-binaries: ## builds binaries to attach a new release
 	rm -rf binaries

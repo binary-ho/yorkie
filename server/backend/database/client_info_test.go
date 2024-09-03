@@ -27,6 +27,7 @@ import (
 )
 
 func TestClientInfo(t *testing.T) {
+	t.Parallel()
 	dummyDocID := types.ID("000000000000000000000000")
 	dummyProjectID := types.ID("000000000000000000000000")
 	otherProjectID := types.ID("000000000000000000000001")

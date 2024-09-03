@@ -54,6 +54,7 @@ func createHelloTree(t *testing.T, ctx *change.Context) *crdt.Tree {
 }
 
 func TestTreeNode(t *testing.T) {
+	t.Parallel()
 	t.Run("text node test", func(t *testing.T) {
 		node := crdt.NewTreeNode(dummyTreeNodeID, "text", nil, "hello")
 		assert.Equal(t, dummyTreeNodeID, node.ID())

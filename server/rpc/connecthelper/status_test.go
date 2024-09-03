@@ -27,6 +27,7 @@ import (
 )
 
 func TestStatus(t *testing.T) {
+	t.Parallel()
 	t.Run("errorToConnectCode test", func(t *testing.T) {
 		status, ok := errorToConnectError(converter.ErrPackRequired)
 		assert.True(t, ok)

@@ -32,6 +32,8 @@ import (
 )
 
 func TestServer(t *testing.T) {
+	t.Parallel()
+
 	t.Run("closing WatchDocument stream on server shutdown test", func(t *testing.T) {
 		ctx := context.Background()
 		svr := helper.TestServer()

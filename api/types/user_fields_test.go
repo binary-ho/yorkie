@@ -26,6 +26,7 @@ import (
 )
 
 func TestSignupFields(t *testing.T) {
+	t.Parallel()
 	var structError *validation.StructError
 
 	t.Run("password validation test", func(t *testing.T) {

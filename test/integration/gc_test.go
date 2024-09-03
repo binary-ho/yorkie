@@ -35,6 +35,7 @@ import (
 )
 
 func TestGarbageCollection(t *testing.T) {
+	t.Parallel()
 	clients := activeClients(t, 2)
 	c1, c2 := clients[0], clients[1]
 	defer deactivateAndCloseClients(t, clients)

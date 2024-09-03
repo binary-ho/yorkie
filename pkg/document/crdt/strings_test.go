@@ -23,6 +23,7 @@ import (
 )
 
 func TestEscapeString(t *testing.T) {
+	t.Parallel()
 	t.Run("escape normal string", func(t *testing.T) {
 		str := `hello world`
 		expected := `hello world`

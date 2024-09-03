@@ -26,6 +26,7 @@ import (
 )
 
 func TestObject(t *testing.T) {
+	t.Parallel()
 	t.Run("marshal test", func(t *testing.T) {
 		root := helper.TestRoot()
 		ctx := helper.TextChangeContext(root)

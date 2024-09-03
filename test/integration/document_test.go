@@ -39,6 +39,7 @@ import (
 )
 
 func TestDocument(t *testing.T) {
+	t.Parallel()
 	clients := activeClients(t, 3)
 	c1, c2, c3 := clients[0], clients[1], clients[2]
 	defer deactivateAndCloseClients(t, clients)

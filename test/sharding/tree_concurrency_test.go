@@ -1,4 +1,4 @@
-//go:build integration
+//go:build sharding
 
 /*
  * Copyright 2024 The Yorkie Authors. All rights reserved.
@@ -16,13 +16,14 @@
  * limitations under the License.
  */
 
-package integration
+package sharding
 
 import (
 	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/yorkie-team/yorkie/client"
 
 	"github.com/yorkie-team/yorkie/pkg/document"
 	"github.com/yorkie-team/yorkie/pkg/document/json"
@@ -258,6 +259,7 @@ func RunTestTreeConcurrency(testDesc string, t *testing.T, initialState json.Tre
 }
 
 func TestTreeConcurrencyEditEdit(t *testing.T) {
+	t.Parallel()
 	//       0   1 2 3 4    5   6 7 8 9    10   11 12 13 14    15
 	// <root> <p> a b c </p> <p> d e f </p>  <p>  g  h  i  </p>  </root>
 
@@ -327,6 +329,7 @@ func TestTreeConcurrencyEditEdit(t *testing.T) {
 }
 
 func TestTreeConcurrencySplitSplit(t *testing.T) {
+	t.Parallel()
 	//       0   1   2   3   4 5 6 7 8    9   10 11 12 13 14    15    16   17 18 19 20 21    22    23    24
 	// <root> <p> <p> <p> <p> a b c d </p> <p>  e  f  g  h  </p>  </p>  <p>  i  j  k  l  </p>  </p>  </p>  </root>
 
@@ -374,6 +377,7 @@ func TestTreeConcurrencySplitSplit(t *testing.T) {
 }
 
 func TestTreeConcurrencySplitEdit(t *testing.T) {
+	t.Parallel()
 	//       0   1   2   3 4 5 6 7    8   9 10 11 12 13    14    15   16 17 18 19 20    21    22
 	// <root> <p> <p> <p> a b c d </p> <p> e  f  g  h  </p>  </p>  <p>  i  j  k  l  </p>  </p>  </root>
 
@@ -434,6 +438,7 @@ func TestTreeConcurrencySplitEdit(t *testing.T) {
 }
 
 func TestTreeConcurrencyStyleStyle(t *testing.T) {
+	t.Parallel()
 	//       0   1 2    3   4 5    6   7 8    9
 	// <root> <p> a </p> <p> b </p> <p> c </p> </root>
 	// 0,3 : |----------|
@@ -474,6 +479,7 @@ func TestTreeConcurrencyStyleStyle(t *testing.T) {
 }
 
 func TestTreeConcurrencyEditStyle(t *testing.T) {
+	t.Parallel()
 	//       0   1 2    3   4 5    6   7 8    9
 	// <root> <p> a </p> <p> b </p> <p> c </p> </root>
 	// 0,3 : |----------|
@@ -527,4 +533,24 @@ func TestTreeConcurrencyEditStyle(t *testing.T) {
 	}
 
 	RunTestTreeConcurrency("concurrently-edit-style-test", t, initialState, initialXML, ranges, editOperations, styleOperations)
+}
+
+// activeClients creates and activates the given number of clients.
+func activeClients(t *testing.T, n int) (clients []*client.Client) {
+	for i := 0; i < n; i++ {
+		c, err := client.Dial(testRPCAddr)
+		assert.NoError(t, err)
+		assert.NoError(t, c.Activate(context.Background()))
+
+		clients = append(clients, c)
+	}
+	return
+}
+
+// deactivateAndCloseClients deactivates and closes the given clients.
+func deactivateAndCloseClients(t *testing.T, clients []*client.Client) {
+	for _, c := range clients {
+		assert.NoError(t, c.Deactivate(context.Background()))
+		assert.NoError(t, c.Close())
+	}
 }

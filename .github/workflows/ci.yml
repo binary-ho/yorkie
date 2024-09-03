@@ -45,8 +45,8 @@ jobs:
           sharding-test:
             - 'server/backend/database/**'
 
-  build:
-    name: build
+  make-tools:
+    name: make-tools
     runs-on: ubuntu-latest
 
     needs: ci-target-check
@@ -58,6 +58,53 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
+    - name: Save GOPATH to environment variables
+      run: echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
+
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Restore Go pkg cache
+      uses: actions/cache@v3
+      id: restore-pkg
+      with:
+        path: ${{ env.GOPATH }}/gopath.tar.zst
+        key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
+        restore-keys: |
+          ${{ runner.os }}-gopath-
+
+    - name: Get tools dependencies if cache not exists
+      if: steps.restore-pkg.outputs.cache-hit != 'true'
+      run: make tools
+
+    - name: Compress Go pkg if cache not exists
+      if: steps.restore-pkg.outputs.cache-hit != 'true'
+      run: |
+        tar -I 'zstd -3' -cf $GOPATH/gopath.tar.zst -C $GOPATH pkg bin
+
+    - name: Store Go pkg if cache not exists
+      if: steps.restore-pkg.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v3
+      with:
+        path: ${{ env.GOPATH }}/gopath.tar.zst
+        key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
+
+  build:
+    name: build
+    runs-on: ubuntu-latest
+
+    needs: [ci-target-check, make-tools]
+    if: ${{ needs.ci-target-check.outputs.build == 'true' }}
+
+    steps:
+    - name: Set up Go ${{ env.GO_VERSION }}
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ env.GO_VERSION }}
+
+    - name: Save GOPATH to environment variables
+      run: echo "GOPATH=$(go env GOPATH)" >> $GITHUB_ENV
+
     - name: Setup buf action
       uses: bufbuild/buf-setup-action@v1
       with:
@@ -66,7 +113,22 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v4
 
-    - name: Get tools dependencies
+    - name: Restore Go pkg cache
+      uses: actions/cache@v3
+      with:
+        path: ${{ env.GOPATH }}/gopath.tar.zst
+        key: ${{ runner.os }}-gopath-${{ hashFiles('Makefile') }}
+        restore-keys: |
+          ${{ runner.os }}-gopath-
+
+    - name: Decompress Go pkg if cache exists
+      run: |
+        if [ -f "$GOPATH/gopath.tar.zst" ]; then
+          mkdir -p $GOPATH/pkg
+          tar -I 'zstd -d' -xf $GOPATH/gopath.tar.zst -C $GOPATH
+        fi
+
+    - name: Get tools dependencies if cache not exists
       run: make tools
 
     - name: Lint
@@ -96,7 +158,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
 
-    needs: ci-target-check
+    needs: [ci-target-check, make-tools]
     if: ${{ needs.ci-target-check.outputs.bench == 'true' }}
 
     steps:
@@ -108,9 +170,6 @@ jobs:
 
     - name: Check out code
       uses: actions/checkout@v4
-
-    - name: Get tools dependencies
-      run: make tools
 
     - name: Stack
       run: docker compose -f build/docker/docker-compose.yml up --build -d
@@ -136,11 +195,21 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         comment-always: true
 
+    - name: Compress and save cache
+      run: |
+        tar -I 'zstd -1' -cf cache.tar.zst -C ./cache .
+
+    - name: Upload compressed cache
+      uses: actions/cache/save@v3
+      with:
+        path: ./cache
+        key: ${{ runner.os }}-benchmark
+
   sharding-test:
     name: sharding-test
     runs-on: ubuntu-latest
 
-    needs: ci-target-check
+    needs: [ci-target-check, make-tools]
     if: ${{ needs.ci-target-check.outputs.sharding-test == 'true' }}
 
     steps:
@@ -152,9 +221,6 @@ jobs:
 
     - name: Check out code
       uses: actions/checkout@v4
-
-    - name: Get tools dependencies
-      run: make tools
 
     - name: Check Docker Compose Version
       run: docker compose --version

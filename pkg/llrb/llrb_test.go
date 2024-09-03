@@ -59,6 +59,7 @@ func (v *intValue) String() string {
 }
 
 func TestTree(t *testing.T) {
+	t.Parallel()
 	t.Run("keeping order test", func(t *testing.T) {
 		arrays := [][]int{
 			{0, 1, 2, 3, 4, 5, 6, 7, 8, 9},

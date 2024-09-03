@@ -33,6 +33,7 @@ func registerGCPairs(root *crdt.Root, pairs []crdt.GCPair) {
 }
 
 func TestRoot(t *testing.T) {
+	t.Parallel()
 	t.Run("garbage collection for array test", func(t *testing.T) {
 		root := helper.TestRoot()
 		ctx := helper.TextChangeContext(root)

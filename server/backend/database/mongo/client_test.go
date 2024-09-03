@@ -49,6 +49,7 @@ func setupTestWithDummyData(t *testing.T) *mongo.Client {
 }
 
 func TestClient(t *testing.T) {
+	t.Parallel()
 	cli := setupTestWithDummyData(t)
 
 	t.Run("FindNextNCyclingProjectInfos test", func(t *testing.T) {

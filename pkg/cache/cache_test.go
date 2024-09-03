@@ -10,6 +10,7 @@ import (
 )
 
 func TestCache(t *testing.T) {
+	t.Parallel()
 	t.Run("create lru expire cache test", func(t *testing.T) {
 		lruCache, err := cache.NewLRUExpireCache[string, string](1)
 		assert.NoError(t, err)

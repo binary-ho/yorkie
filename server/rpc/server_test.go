@@ -141,6 +141,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestSDKRPCServerBackend(t *testing.T) {
+	t.Parallel()
 	t.Run("activate/deactivate client test", func(t *testing.T) {
 		testcases.RunActivateAndDeactivateClientTest(t, testClient)
 	})

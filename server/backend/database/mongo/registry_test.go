@@ -33,6 +33,7 @@ import (
 )
 
 func TestRegistry(t *testing.T) {
+	t.Parallel()
 	registry := NewRegistryBuilder().Build()
 
 	id := types.ID(primitive.NewObjectID().Hex())
@@ -48,6 +49,7 @@ func TestRegistry(t *testing.T) {
 }
 
 func TestEncoder(t *testing.T) {
+	t.Parallel()
 	t.Run("idEncoder test", func(t *testing.T) {
 		field := "id"
 		id := types.ID(primitive.NewObjectID().Hex())
